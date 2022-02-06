@@ -25,8 +25,13 @@ POST_NOTARIZED_ZIP="${PRODUCT_NAME}_notarized_$(date +"%Y-%m-%d").zip"
 
 # sign the resulting app bundle
 echo "signing..."
-echo codesign --force --options runtime --deep --sign "${SIGNING_IDENTITY}" ${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}
-codesign --force --options runtime --deep --sign "${SIGNING_IDENTITY}" ${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}
+if [ "$2" == "entitlements" ]; then
+	echo codesign --force --options runtime --deep  --entitlements "${ENTITLEMENTS_FILE}" --sign "${SIGNING_IDENTITY}" ${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}
+	codesign --force --options runtime --deep  --entitlements "${ENTITLEMENTS_FILE}" --sign "${SIGNING_IDENTITY}" ${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}
+else
+	echo codesign --force --options runtime --deep --sign "${SIGNING_IDENTITY}" ${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}
+	codesign --force --options runtime --deep --sign "${SIGNING_IDENTITY}" ${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}
+fi
 
 if [ "$1" == "notarize" ]; then
 
