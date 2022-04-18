@@ -7,6 +7,7 @@ export UNLOCALIZED_RESOURCES_FOLDER_PATH="${CONTENTS_FOLDER_PATH}/Resources"
 export FRAMEWORKS_FOLDER_PATH="${CONTENTS_FOLDER_PATH}/Frameworks"
 export ICONS="${ICONSFILENAME}.icns"
 export BUNDLE_ID="com.macsourceports.${PRODUCT_NAME}"
+export HIGH_RESOLUTION_CAPABLE="false"
 
 # For parallel make on multicore boxes...
 export NCPU=`sysctl -n hw.ncpu`

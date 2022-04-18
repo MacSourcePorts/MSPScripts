@@ -66,7 +66,7 @@ PLIST="<?xml version=\"1.0\" encoding=\"UTF-8\"?>
     <key>NSPrincipalClass</key>
     <string>NSApplication</string>
     <key>NSHighResolutionCapable</key>
-    <false/>
+    <${HIGH_RESOLUTION_CAPABLE}/>
     <key>NSRequiresAquaSystemAppearance</key>
     <false/>
 </dict>
