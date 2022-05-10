@@ -26,11 +26,11 @@ POST_NOTARIZED_ZIP="${PRODUCT_NAME}_notarized_$(date +"%Y-%m-%d").zip"
 # sign the resulting app bundle
 echo "signing..."
 if [ "$2" == "entitlements" ]; then
-	echo codesign --force --options runtime --deep  --entitlements "${ENTITLEMENTS_FILE}" --sign "${SIGNING_IDENTITY}" ${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}
-	codesign --force --options runtime --deep  --entitlements "${ENTITLEMENTS_FILE}" --sign "${SIGNING_IDENTITY}" ${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}
+	echo codesign --force --options runtime --deep  --entitlements "${ENTITLEMENTS_FILE}" --sign "${SIGNING_IDENTITY}" "${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}"
+	codesign --force --options runtime --deep  --entitlements "${ENTITLEMENTS_FILE}" --sign "${SIGNING_IDENTITY}" "${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}"
 else
-	echo codesign --force --options runtime --deep --sign "${SIGNING_IDENTITY}" ${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}
-	codesign --force --options runtime --deep --sign "${SIGNING_IDENTITY}" ${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}
+	echo codesign --force --options runtime --deep --sign "${SIGNING_IDENTITY}" "${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}"
+	codesign --force --options runtime --deep --sign "${SIGNING_IDENTITY}" "${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}"
 fi
 
 if [ "$1" == "notarize" ]; then
@@ -42,7 +42,7 @@ if [ "$1" == "notarize" ]; then
 
 	# create the zip to send to the notarization service
 	echo "zipping..."
-	ditto -c -k --sequesterRsrc --keepParent ${WRAPPER_NAME} ${PRE_NOTARIZED_ZIP}
+	ditto -c -k --sequesterRsrc --keepParent "${WRAPPER_NAME}" "${PRE_NOTARIZED_ZIP}"
 
 	# create temporary files
 	NOTARIZE_APP_LOG=$(mktemp -t notarize-app)
@@ -84,7 +84,7 @@ if [ "$1" == "notarize" ]; then
 	echo "notarized"
 	echo "zipping notarized..."
 
-	ditto -c -k --sequesterRsrc --keepParent ${WRAPPER_NAME} ${POST_NOTARIZED_ZIP}
+	ditto -c -k --sequesterRsrc --keepParent "${WRAPPER_NAME}" "${POST_NOTARIZED_ZIP}"
 
-	echo "done. ${POST_NOTARIZED_ZIP} contains notarized ${WRAPPER_NAME} build."
+	echo "done. ${POST_NOTARIZED_ZIP} contains notarized "${WRAPPER_NAME}" build."
 fi
